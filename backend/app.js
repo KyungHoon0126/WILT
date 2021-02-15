@@ -11,13 +11,12 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
-app.use(cookieParser())
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/', require('./routes'));
 
 app.listen(config.port, () => {
     console.log(`Server is running at port ${config.port}`)
 });
-

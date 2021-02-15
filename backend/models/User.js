@@ -35,25 +35,37 @@ const userSchema = mongoose.Schema({
 });
 
 
-userSchema.pre('save', next => {
+userSchema.pre('save', function(next) {
     let user = this;
+    
     if (user.isModified('password')) {
-        bcrypt.genSalt(saltRounds, (err, salt) => {
+        bcrypt.genSalt(saltRounds, function(err, salt){
             if (err) {
-                return next(arr)
+                return next(err);
             };
-            bcrypt.hash(user.password, salt, (err, hash) => {
+
+            bcrypt.hash(user.password, salt, function(err, hash){ // hash : 암호화된 비밀번호
                 if (err) {
                     return next(err);
                 };
                 user.password = hash;
                 next();
             });
-        });
+        });   
     } else {
         next();
-    };
+    } 
 });
+
+userSchema.methods.comparePassword = (plainPassword, cb) => {
+    bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+        if (err) {
+            console.log(err);
+            return cb(err);
+        };
+        cb(null, isMatch);
+    });
+};
 
 
 const User = mongoose.model('User', userSchema);
