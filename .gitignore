@@ -5,3 +5,5 @@ dev.js
 npm-debug.log*
 
 .vscode
+
+.env
