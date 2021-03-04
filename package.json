@@ -2,9 +2,11 @@
   "name": "wilt",
   "version": "1.0.0",
   "description": "What I learned Today?",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node backend/index.js",
+    "start": "node backend/app.js",
+    "backend": "nodemon backend/app.js",
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix front-end",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,9 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "concurrently": "^6.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
