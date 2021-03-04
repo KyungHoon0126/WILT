@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
 });
 
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', (next) => {
     let user = this;
     
     if (user.isModified('password')) {
@@ -81,6 +81,18 @@ userSchema.methods.generateToken = (cb) => {
     });
 };
 
+userSchema.statics.findByToken = (token, cb) => {
+    let user = this;
+
+    jwt.verify(token, 'secret', (err, decoded) => {
+        user.findOne({"_id" : decoded, "token": token}, (err, user) => {
+            if (err) {
+                return cb(err);
+            }
+            cb(null, user);
+        });
+    });
+};
 
 const User = mongoose.model('User', userSchema);
 

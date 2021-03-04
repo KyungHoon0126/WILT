@@ -57,3 +57,30 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+exports.auth = (req, res) => {
+    res.status(200).json({
+        _id: req.userId,
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        lastname: req.user.lastname,
+        role: req.user.role,
+        image: req.user.image
+    });
+};
+
+exports.logout = async(req, res) => {
+    await User.findOneAndUpdate({ _id: req.body._id }, { token: "" }, (err, user) => {
+        if (err) {
+            return res.json({
+                message: "로그아웃 실패",
+                err
+            });
+        }
+        return res.json({
+            message: "로그아웃 성공"
+        });
+    });
+};
