@@ -67,6 +67,20 @@ userSchema.methods.comparePassword = (plainPassword, cb) => {
     });
 };
 
+userSchema.methods.generateToken = (cb) => {
+    let user = this;
+    let token = jwt.sign(user._id.toHexString(), 'secret');
+
+    user.token = token;
+    user.save((err, user) => {
+        if (err) {
+            console.log(err);
+            return cb(err);
+        }
+        cb(null, user);
+    });
+};
+
 
 const User = mongoose.model('User', userSchema);
 
