@@ -5,6 +5,8 @@ let auth = (req, res, next) => {
 
     User.getUser(token, (err, user) => {
         if (err) {
+            console.log(err.message);
+
             switch (err.message) {
                 case 'jwt must be provided':
                 case 'TOKEN_IS_ARRAY':
@@ -15,7 +17,7 @@ let auth = (req, res, next) => {
                         message: "유효하지 않은 토큰",
                         isAuth: false
                     });
-                case 'EXPIRED_TOKEN':
+                case 'jwt expired':
                     return res.status(410).json({ 
                         message: "토큰 만료",
                         isAuth: false

@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
-const path = require('path')
+const path = require('path');
+const { debug } = require('console');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const userSchema = mongoose.Schema({
@@ -70,7 +71,9 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
     let user = this;
-    let token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
+    let token = jwt.sign({ _id: user._id.toHexString(), exp: Math.floor(Date.now() / 1000) + 60 }, process.env.SECRET_KEY);
+        
+    // token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
 
     user.token = token;
     user.save(function (err, user) {
