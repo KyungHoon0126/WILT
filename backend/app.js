@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 // public 디렉터리 밑에 있는 데이터들은 웹브라우저의 요청에 따라 서비스 제공. 
 // pulbic 디렉터리에 저장된 파일만을 제공.
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 

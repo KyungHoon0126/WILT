@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const ECategory = require('../Enums/ECategory');
 const autoIncrement = require('mongoose-auto-increment');
 const { User } = require('../models/User');
-const stringValidation = require('../lib/validation');
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -48,17 +47,31 @@ postSchema.plugin(autoIncrement.plugin, {
     increment: 1
 });
 
-postSchema.pre('save', function(next) {
+postSchema.pre('save', function(next, token) {
     let post = this;
     this.updatedAt = Date.now();
 
-    // 내용 크기, 자리수, 유효성 검사 등등 하면 될듯.
-    if (!stringValidation.isEmpty(post.title)) {
+    const user = User.getUser(token['token'], (err, user) => {
+        if (err) {
+            return next(err);
+        }
+
+        post.writer = user.name;
         next();
-    } else {
-        next();
-    }
+    });
 });
+
+
+postSchema.statics.getPost = function(token, cb) {
+    let post = this;
+
+    post.findOne({ "postIdx" : postIdx }, (err, post) => {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, post);
+    });
+};
 
 const Post = mongoose.model('Post', postSchema);
 
