@@ -3,7 +3,7 @@ const { User } = require('../../models/User');
 const { Post } = require('../../models/Post');
 const stringValidation = require('../../lib/validation');
 
-exports.post = (req, res) => {
+exports.createPost = (req, res) => {
     const post = new Post(req.body);
 
     post.save({ token: req.headers.token }, (err, postInfo) => {
@@ -48,8 +48,6 @@ exports.deletePost = (req, res) => {
 };
 
 exports.updatePost = (req, res) => {
-    console.log(req.body);
-
     Post.findOneAndUpdate( { postIdx: req.params.idx },
                            { title: req.body.title,  
                             content: req.body.content, 
@@ -63,11 +61,26 @@ exports.updatePost = (req, res) => {
                 message: "수정 실패",
                 err
             });
-        }
+         }
 
         console.log("UPDATE 200".green);
         return res.json({
             message: "수정 성공"
+        });
+    });
+};
+
+exports.getPost = (req, res) => {
+    Post.find((err, posts) => {
+        if (err) {
+            return res.json({
+                message: "게시글 조회 실패",
+                err
+            });
+        }
+    }).select(["-_id", "-__v"]).then((resp) => {
+        return res.json({
+            posts: resp
         });
     });
 };
