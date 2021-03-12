@@ -71,10 +71,11 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
     let user = this;
-    let token = jwt.sign({ _id: user._id.toHexString(), exp: Math.floor(Date.now() / 1000) + 60 }, process.env.SECRET_KEY);
+    // Math.floor(Date.now() / 1000) + 60
+    let token = jwt.sign({ _id: user._id.toHexString(), exp: 999999999999999999999 }, process.env.SECRET_KEY);
         
     // token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
-
+    
     user.token = token;
     user.save(function (err, user) {
         if (err) {

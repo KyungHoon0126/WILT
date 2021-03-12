@@ -46,3 +46,28 @@ exports.deletePost = (req, res) => {
         });
     });
 };
+
+exports.updatePost = (req, res) => {
+    console.log(req.body);
+
+    Post.findOneAndUpdate( { postIdx: req.params.idx },
+                           { title: req.body.title,  
+                            content: req.body.content, 
+                            category: req.body.category, 
+                            thumbnail: req.body.thumbnail, 
+                            updatedAt: Date.now() }, (err, post) => {
+                                
+        if (err) {
+            console.log("UPDATE POST 400".red);
+            return res.json({
+                message: "수정 실패",
+                err
+            });
+        }
+
+        console.log("UPDATE 200".green);
+        return res.json({
+            message: "수정 성공"
+        });
+    });
+};

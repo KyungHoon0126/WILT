@@ -4,5 +4,6 @@ const { auth }  = require('../auth/../../middleware/auth')
 
 router.post('/', auth, postCtrl.post);
 router.delete('/', auth, postCtrl.deletePost);
+router.put('/:idx', auth, postCtrl.updatePost);
 
 module.exports = router;
