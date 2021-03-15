@@ -5,7 +5,7 @@ const { User } = require('../models/User');
 
 autoIncrement.initialize(mongoose.connection);
 
-const postSchema = mongoose.Schema({
+const postSchema = new mongoose.Schema({
     postIdx: {
         type: Number,
         default: 0
@@ -32,6 +32,10 @@ const postSchema = mongoose.Schema({
     },
     thumbnail: String,
     viewcnt: Number,
+    like: {
+        type: Number,
+        default: 0
+    },
     category: {
         type: String,
         enum : ECategory,

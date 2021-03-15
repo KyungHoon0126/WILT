@@ -6,7 +6,7 @@ const path = require('path');
 const { debug } = require('console');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         maxlength: 50
@@ -71,11 +71,12 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
     let user = this;
-    // Math.floor(Date.now() / 1000) + 60
-    let token = jwt.sign({ _id: user._id.toHexString(), exp: 999999999999999999999 }, process.env.SECRET_KEY);
-        
-    // token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
+    let token = jwt.sign({ _id: user._id.toHexString(), exp: (Date.now() / 1000) + 86400 }, process.env.SECRET_KEY);       
+    // let token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
     
+    // 토큰 만료 시간
+    // 10m : Math.floor(Date.now() / 1000) + 600
+
     user.token = token;
     user.save(function (err, user) {
         if (err) {

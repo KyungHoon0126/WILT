@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use('/', require('./routes'));
 
 // Promise : 콜백 중첩 완화를 위해 사용
-// Node.js의 native Promise 사용
+// Node.js의 Native Promise 사용
 mongoose.Promise = global.Promise;
 
 mongoose.connect(config.mongoURI, {

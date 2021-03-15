@@ -1,7 +1,6 @@
-const colors = require('colors');
+require('colors');
 const { User } = require('../../models/User');
 const { Post } = require('../../models/Post');
-const stringValidation = require('../../lib/validation');
 
 exports.createPost = (req, res) => {
     const post = new Post(req.body);
@@ -48,12 +47,14 @@ exports.deletePost = (req, res) => {
 };
 
 exports.updatePost = (req, res) => {
-    Post.findOneAndUpdate( { postIdx: req.params.idx },
-                           { title: req.body.title,  
+    Post.findOneAndUpdate({ postIdx: req.params.idx },
+                          { 
+                            title: req.body.title,  
                             content: req.body.content, 
                             category: req.body.category, 
                             thumbnail: req.body.thumbnail, 
-                            updatedAt: Date.now() }, (err, post) => {
+                            updatedAt: Date.now() 
+                          }, (err, post) => {
                                 
         if (err) {
             console.log("UPDATE POST 400".red);
@@ -80,7 +81,10 @@ exports.getPost = (req, res) => {
         }
     }).select(["-_id", "-__v"]).then((resp) => {
         return res.json({
-            posts: resp
+            message: "게시글 조회 성공",
+            data: {
+                posts: resp
+            }
         });
     });
 };
