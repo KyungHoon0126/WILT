@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const { Image } = require('../../models/Image');
+const { createUrl } = require('../../lib/util/createURL');
 require('colors');
 
 const storage = multer.diskStorage({
@@ -37,7 +38,8 @@ exports.uploadSingleImage = (req, res, next) => {
     const obj = {
         name: req.body.name,
         desc: req.body.desc,
-        image: req.file.filename
+        image: req.file.filename,
+        url: createUrl(req.file.filename)
 
         // 이미지 자체를 DB에 저장할 때
         // image: {

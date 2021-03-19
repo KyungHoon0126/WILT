@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-router.use('/auth', require('./auth'));
-router.use('/post', require('./post'));
-router.use('/upload', require('./upload'));
+router.use('/api/auth', require('./auth'));
+router.use('/api/post', require('./post'));
+router.use('/api/upload', require('./upload'));
 
 module.exports = router;

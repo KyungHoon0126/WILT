@@ -77,6 +77,10 @@ postSchema.statics.getPost = function(token, cb) {
     });
 };
 
+const aggregatePainate = require('mongoose-aggregate-paginate-v2');
+
 const Post = mongoose.model('Post', postSchema);
+
+postSchema.plugin(aggregatePainate);
 
 module.exports = { Post };
