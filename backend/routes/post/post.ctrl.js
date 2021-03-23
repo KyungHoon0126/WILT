@@ -23,7 +23,7 @@ exports.createPost = (req, res) => {
 };
 
 exports.deletePost = (req, res) => {
-    Post.findOne({ postIdx: req.query.postIdx }, (err, post) => {
+    Post.findOne({ postIdx: req.params.idx }, (err, post) => {
         if (!post) {
             console.log("DELETE POST 400".red);
             return res.json({
@@ -71,7 +71,7 @@ exports.updatePost = (req, res) => {
     });
 };
 
-exports.getPost = (req, res) => {
+ /* exports.getPost = (req, res) => {
     Post.find((err, posts) => {
         if (err) {
             return res.json({
@@ -87,4 +87,44 @@ exports.getPost = (req, res) => {
             }
         });
     });
+}; */
+
+exports.getPost = (req, res) => {
+    const postAggregate = Post.aggregate();
+    const options = {
+        page: req.query.page,
+        limit: req.query.limit,
+    }
+
+    /* Post.aggregatePaginate(postAggregate, options, (err, results) => {
+        if (err) {
+            return res.json({
+                message: "게시글 조회 실패",
+                err
+            });
+        }
+    }).select(["-_id", "-__v"]).then((resp) => {
+        return res.json({
+            message: "게시글 조회 성공",
+            data: {
+                posts: resp.docs
+            }
+        });
+    }); */
+
+    Post.aggregatePaginate(postAggregate, options).then((results) => {
+        return res.json({
+            message: "게시글 조회 성공",
+            data: {
+                posts: results.docs
+            }
+        });
+    }).catch((err) => {
+        if (err) {
+            return res.json({
+                message: "게시글 조회 실패",
+                err
+            });
+        }
+    }) 
 };
