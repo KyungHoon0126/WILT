@@ -25,7 +25,7 @@ function LandingPage() {
      * 
      * 
      */
-    const InfiniteScroll = () => {
+    /* const InfiniteScroll = () => {
         const [page, setPage] = useState(1);
         const [posts, setPosts] = useState(getPostList(1));
 
@@ -47,23 +47,24 @@ function LandingPage() {
                 window.removeEventListener('scroll', handleScroll, true);
             }
         }, [handleScroll])
-    };
+    }; */
     /**
      * 
      * 
      * 
      * 
-     */
+     */     
 
     return (
         <div style={{ width: '100%', margin: '0' }}>
-            <div style={{ width: '85%', margin: '1rem auto' }}>
-                <Row gutter={[16, 16]}>
+            <div style={{ width: '90%', margin: '1rem auto' }}>
+                <Row gutter={[28, 28]}>
                     {posts && posts.map((post, index) => 
                         <React.Fragment key={index}>
                             <GridCards image={post.thumbnail}
-                                       postIdx={post.postIdx}
+                                       postIdx={post.postIdx}   
                                        postTitle={post.title}
+                                       postCreatedAt={post.createdAt}
                             />
                         </React.Fragment>
                     )}
