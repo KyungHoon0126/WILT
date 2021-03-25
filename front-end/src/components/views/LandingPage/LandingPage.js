@@ -64,6 +64,7 @@ function LandingPage() {
                             <GridCards image={post.thumbnail}
                                        postIdx={post.postIdx}   
                                        postTitle={post.title}
+                                       postContent={post.content}
                                        postCreatedAt={post.createdAt}
                             />
                         </React.Fragment>
