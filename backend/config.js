@@ -8,8 +8,11 @@ const port = process.env.PORT;
 const enviroment = process.env.NODE_ENV;
 console.log(`NODE ENVIROMENT : ${enviroment}`);
 
+const serverAddress = process.env.SERVER_ADDRESS;
+
 module.exports = {
     mongoURI,
     port,
-    enviroment
+    enviroment,
+    serverAddress
 }

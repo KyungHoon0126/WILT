@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const { debug } = require('console');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        maxlegth: 50
+        maxlength: 50
     },
     email: {
         type: String,
@@ -15,11 +18,7 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        maxlegth: 50
-    },
-    lastname: {
-        type: String,
-        maxlegth: 50
+        maxlength: 80
     },
     role: {
         type: Number,
@@ -34,8 +33,7 @@ const userSchema = mongoose.Schema({
     }
 });
 
-
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
     let user = this;
     
     if (user.isModified('password')) {
@@ -44,7 +42,7 @@ userSchema.pre('save', (next) => {
                 return next(err);
             };
 
-            bcrypt.hash(user.password, salt, function(err, hash){ // hash : 암호화된 비밀번호
+            bcrypt.hash(user.password, salt, function(err, hash){ 
                 if (err) {
                     return next(err);
                 };
@@ -57,8 +55,8 @@ userSchema.pre('save', (next) => {
     } 
 });
 
-userSchema.methods.comparePassword = (plainPassword, cb) => {
-    bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
         if (err) {
             console.log(err);
             return cb(err);
@@ -67,12 +65,16 @@ userSchema.methods.comparePassword = (plainPassword, cb) => {
     });
 };
 
-userSchema.methods.generateToken = (cb) => {
+userSchema.methods.generateToken = function(cb) {
     let user = this;
-    let token = jwt.sign(user._id.toHexString(), 'secret');
+    let token = jwt.sign({ _id: user._id.toHexString(), exp: (Date.now() / 1000) + 86400 }, process.env.SECRET_KEY);       
+    // let token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
+    
+    // 토큰 만료 시간
+    // 10m : Math.floor(Date.now() / 1000) + 600
 
     user.token = token;
-    user.save((err, user) => {
+    user.save(function (err, user) {
         if (err) {
             console.log(err);
             return cb(err);
@@ -81,10 +83,14 @@ userSchema.methods.generateToken = (cb) => {
     });
 };
 
-userSchema.statics.findByToken = (token, cb) => {
+userSchema.statics.getUser = function(token, cb) {
     let user = this;
 
-    jwt.verify(token, 'secret', (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+        if (err) {
+            cb(err, null);
+        };
+        
         user.findOne({"_id" : decoded, "token": token}, (err, user) => {
             if (err) {
                 return cb(err);

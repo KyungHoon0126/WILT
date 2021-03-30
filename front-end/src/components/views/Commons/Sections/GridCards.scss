@@ -1,0 +1,46 @@
+.GridCards-Wrapper {
+    position: relative;
+    width: 320px;
+    height: 377px;
+    border-radius: 5;
+    box-shadow: 1px 1px 2px 2px #f8f9fa;
+}
+
+#GridCards-Wrapper-Image {
+    width: 100%;
+    height: 167px;
+    border-radius: 5 5 0 0;
+}
+
+.GridCards-Wrapper-Content {
+    height: 165px;
+    padding: 16px;
+
+    h4 {
+        font-size: 16;
+        color: #212529;
+        margin: 0px 0px 4px;
+    }
+    
+    p {
+        font-size: 14;
+        color: #495057;
+        margin: 0px 0px 24px;
+    }
+    
+    span {
+        font-size: 12;
+        color: #868E96;
+    }
+}
+
+.GridCards-Wrapper-Footer {
+    width: 216px;
+    height: 45px;
+    padding: 10px 16px;
+
+    h3 {
+        margin: 0;
+        font-size: 12px;
+    }
+}

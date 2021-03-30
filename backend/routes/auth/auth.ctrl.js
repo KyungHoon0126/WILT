@@ -1,61 +1,71 @@
+require('colors');
 const { User } = require('../../models/User')
 
-exports.signUp = async (req, res) => {
+exports.signUp = (req, res) => {
     const user = new User(req.body);
+    
+    user.save((err, userInfo) => {
+        if (err) {
+            console.log("SIGN UP 400".red);
 
-    try {
-        await user.save((err, userInfo) => {
-            return res.status(200).json({ 
-                status: 200,
-                message: "회원가입이 완료되었습니다."
-            })
-        });  
-    } catch (err) {
-        console.log(err.message)
-        return res.json({ 
-            status: 500,
-            message: "회원가입에 실패하였습니다."
+            return res.json({
+                message: "회원가입에 실패하였습니다.",
+                err
+            });
+        }
+        
+        console.log("SIGN UP 200".green);
+        return res.status(200).json({ 
+            status: 200,
+            message: "회원가입이 완료되었습니다."
         });
-    }
+    });  
 };
 
-exports.login = async (req, res) => {
-    try {
-         await User.findOne({ email: req.body.email }, (err, user) => {
-            if (!user) {
-                return res.json({
-                    message: "해당 이메일에 해당하는 유저가 없습니다.", 
-                });
-            }
-    
-            user.comparePassword(req.body.password, (err, isMatch) => {
-                if (!isMatch) {
-                    return res.json({
-                        message: "비밀번호가 일치하지 않습니다."
-                    });
-                }
+exports.login = (req, res) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (!user) {
+            console.log("LOGIN 400".red);
+            return res.json({
+                loginSuccess: false,
+                mesage: "해당 이메일에 해당하는 유저가 없습니다."
             });
-    
+        };
+
+        user.comparePassword(req.body.password, (err, isMatch) => {
+            if (!isMatch) {
+                console.log("LOGIN COMPARE PASSWORD 400".red);
+                return res.json({ 
+                    loginSuccess: false, 
+                    message: "비밀번호가 틀렸습니다." 
+                });
+            };   
+
             user.generateToken((err, user) => {
                 if (err) {
+                    console.log("LOGIN GENERATE TOKEN 400".red);
                     console.log(err);
                     return res.status(400).send(err);
                 }
 
+                console.log(`LOGIN 200`.green + " " + req.body.email);
+
                 res.cookie("token", user.token)
                    .status(200)
                    .json({
-                        message: "로그인 성공"
+                       message: "로그인 성공",
+                       data: {
+                           "token" : user.token,
+                           "user" : {
+                                name: user.name,
+                                email: user.email,
+                           }
+                       }
+                       // userId: user._id
                    });
             });
         });
-    } catch (err) {
-        console.log(err.message);
-        return res.json({
-            status: 500,
-            message: "로그인 실패"
-        });
-    }
+    });
 };
 
 exports.auth = (req, res) => {
@@ -71,15 +81,18 @@ exports.auth = (req, res) => {
     });
 };
 
-exports.logout = async(req, res) => {
-    await User.findOneAndUpdate({ _id: req.body._id }, { token: "" }, (err, user) => {
+exports.logout = (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
         if (err) {
+            console.log("LOGOUT 400".red);
             return res.json({
                 message: "로그아웃 실패",
                 err
             });
         }
-        return res.json({
+
+        console.log("LOGOUT 200".green + " " + req.user.email);
+        return res.json({ 
             message: "로그아웃 성공"
         });
     });
