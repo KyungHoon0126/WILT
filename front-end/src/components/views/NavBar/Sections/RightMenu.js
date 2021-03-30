@@ -1,15 +1,17 @@
 import React from 'react';
 import { Menu } from 'antd';
 import axios from 'axios';
-import { SERVER_ADDRESS } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { AUTH_API_URL } from '../../../Config';
 
 function RightMenu(props) {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user);
+
+  console.log(user)
 
   const logoutHandler = () => {
-    axios.get(`${SERVER_ADDRESS}/logout`).then(response => {
+    axios.get(`${AUTH_API_URL}/logout`).then(response => {
       if (response.status === 200) {
         props.history.push("/login");
       } else {
@@ -18,14 +20,14 @@ function RightMenu(props) {
     });
   };
 
-  if (user.userData && !user.userData.isAuth) {
+  if (user.loginSuccess && !user.loginSuccess.isAuth) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
           <a href="/login">Signin</a>
         </Menu.Item>
         <Menu.Item key="app">
-          <a href="/register">Signup</a>
+          <a href="/signup">Signup</a>
         </Menu.Item>
       </Menu>
     )

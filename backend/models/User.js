@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         maxlength: 80
     },
-    lastname: {
-        type: String,
-        maxlength: 50
-    },
     role: {
         type: Number,
         default: 0

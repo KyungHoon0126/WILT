@@ -3,10 +3,11 @@ const { User } = require('../../models/User')
 
 exports.signUp = (req, res) => {
     const user = new User(req.body);
-
+    
     user.save((err, userInfo) => {
         if (err) {
             console.log("SIGN UP 400".red);
+
             return res.json({
                 message: "회원가입에 실패하였습니다.",
                 err

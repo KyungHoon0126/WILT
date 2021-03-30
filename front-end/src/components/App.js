@@ -6,6 +6,8 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import Auth from '../hoc/auth';
 
 import NavBar from './views/NavBar/NavBar';
+import LoginPage from './views/LoginPage/LoginPage';
+import SignupPage from './views/SignupPage/SignupPage';
 
 function App() {
     return (
@@ -14,6 +16,8 @@ function App() {
             <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
                <Switch> 
                    <Route exact path="/" component={Auth(LandingPage, null)} />
+                   <Route exact path="/login" component={Auth(LoginPage, false)} />
+                   <Route exact path="/signup" component={Auth(SignupPage, false)} />
                 </Switch> 
             </div>
         </Suspense>

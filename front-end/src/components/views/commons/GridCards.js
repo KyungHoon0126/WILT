@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Button, Divider } from 'antd';
-import './GridCards.scss'
+import './Sections/GridCards.scss'
 import moment from 'moment'
 
 function GridCards(props) {

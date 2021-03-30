@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { POST_API_URL } from '../../Config';
-import GridCards from '../commons/GridCards';
+import GridCards from '../Commons/GridCards';
 import { Row } from 'antd';
 
 function LandingPage() {

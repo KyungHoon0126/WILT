@@ -21,11 +21,10 @@ function NavBar() {
         <div className="menu__logo">
           <a href="/">WILT</a>
         </div>
-
-        {/* <div className="menu__container">
-          <div className="menu_left">
+        <div className="menu__container">
+          {/* <div className="menu_left">
             <LeftMenu mode="horizontal" />
-          </div>
+          </div> */}
 
           <div className="menu_rigth">
             <RightMenu mode="horizontal" />
@@ -46,15 +45,9 @@ function NavBar() {
             <LeftMenu mode="inline" />
             <RightMenu mode="inline" />
           </Drawer>
-        </div> */}
+        </div>
       </nav>
     )
-
-    // return (
-    //   <div className="menu__logo">
-    //       <a href="/">WILT</a>
-    //     </div>
-    // )
 }
 
 export default NavBar
