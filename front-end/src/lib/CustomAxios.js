@@ -4,5 +4,8 @@ import Cookie from 'js-cookie';
 
 export const CustomAxios = Axios.create({
     baseURL: SERVER_ADDRESS,
-    headers: Cookie.get("token")
+    headers: {
+        token: Cookie.get("token"),
+        // 'Access-Control-Allow-Origin': '*',
+    },
 });

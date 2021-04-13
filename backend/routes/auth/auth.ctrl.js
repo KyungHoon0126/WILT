@@ -60,7 +60,8 @@ exports.login = (req, res) => {
                                 name: user.name,
                                 email: user.email,
                            }
-                       }
+                       },
+                       loginSuccess: true,
                        // userId: user._id
                    });
             });

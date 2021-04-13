@@ -17,7 +17,8 @@ function LandingPage() {
         .then(response => {
             console.log(response);
             setPosts([...posts, ...response.data.posts]);
-        });
+        })
+        .catch((e) => console.log(e));
     };
 
     /**

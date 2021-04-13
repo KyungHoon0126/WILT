@@ -6,18 +6,18 @@ import {
     AUTH_USER
 } from './types';
 
-export function loginUser(dataToSubmit) {
-    const request = CustomAxios.post(`${AUTH_API_URL}/login`, dataToSubmit)
+export async function loginUser(dataToSubmit) {
+    const request = await CustomAxios.post(`${AUTH_API_URL}/login`, dataToSubmit)
                          .then(response => response.data);
-
+    
     return {
         type: LOGIN_USER,
         payload: request
     }
 };
 
-export function signupUser(dataToSubmit) {
-    const request = CustomAxios.post(`${AUTH_API_URL}/signUp`, dataToSubmit)
+export async function signupUser(dataToSubmit) {
+    const request = await CustomAxios.post(`${AUTH_API_URL}/signUp`, dataToSubmit)
                          .then(response => response.data);
 
     return {
@@ -26,8 +26,8 @@ export function signupUser(dataToSubmit) {
     }
 };
 
-export function auth() {
-    const request = CustomAxios.get(`${AUTH_API_URL}/auth`)
+export async function auth() {
+    const request = await CustomAxios.get(`${AUTH_API_URL}/auth`)
                          .then(response => response.data);
 
     return {
