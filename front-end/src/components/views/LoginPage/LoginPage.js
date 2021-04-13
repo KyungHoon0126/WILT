@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
+import Cookie from 'js-cookie';
+import Swal from 'sweetalert2';
+import './Sections/LoginPage.scss'
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -28,16 +31,27 @@ function LoginPage(props) {
         dispatch(loginUser(body))
             .then(response => {
                 if (response.payload.loginSuccess) {
+                    Cookie.set('token', response.payload.data.token);
                     props.history.push('/');
+                    Swal.fire({  
+                        title: '로그인 성공',  
+                        type: 'success',  
+                        text: '',  
+                      });  
                 } else {
-                    alert('로그인 실패');
+                    setPassword('');
+                    Swal.fire({  
+                        title: '로그인 실패',  
+                        type: 'error',  
+                        text: '',  
+                      });
                 }
             });
     }
 
     return (
         <div className="LoginPage-Wrapper">
-            <form id="LoginPage-Wrapper-Form">
+            <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
                 <label>이메일</label>
                 <input type="email"
                        value={Email}

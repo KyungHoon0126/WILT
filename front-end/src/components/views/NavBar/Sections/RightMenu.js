@@ -1,45 +1,59 @@
 import React from 'react';
 import { Menu } from 'antd';
-import axios from 'axios';
+import { CustomAxios } from '../../../../lib/CustomAxios';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { AUTH_API_URL } from '../../../Config';
+import Cookie from 'js-cookie';
+import Swal from 'sweetalert2';
 
 function RightMenu(props) {
-  const user = useSelector(state => state.user);
+    // const user = useSelector(state => state.user);
+    
+    const logoutHandler = () => {
+        CustomAxios.get(`${AUTH_API_URL}/logout`).then(response => {
+            if (response.status === 200) {
+              Cookie.remove('token');
+              props.history.push("/login");
+              Swal.fire({  
+                 title: '로그아웃 성공',  
+                 type: 'success',  
+                 text: '',  
+              });  
+            } else {
+                Swal.fire({  
+                    title: '로그아웃 실패',  
+                    type: 'success',  
+                    text: '',  
+                  });  
+            }
+        });
+    };
 
-  console.log(user)
+    // if (user.loginSuccess && !user.loginSuccess.isAuth) {
+       if (!Cookie.get('token')) {
+        return (
+            <Menu mode={props.mode}>
+                <Menu.Item key="mail">
+                    <a href="/login">Signin</a>
+                </Menu.Item>
 
-  const logoutHandler = () => {
-    axios.get(`${AUTH_API_URL}/logout`).then(response => {
-      if (response.status === 200) {
-        props.history.push("/login");
-      } else {
-        alert('Log Out Failed')
-      }
-    });
-  };
-
-  if (user.loginSuccess && !user.loginSuccess.isAuth) {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="mail">
-          <a href="/login">Signin</a>
-        </Menu.Item>
-        <Menu.Item key="app">
-          <a href="/signup">Signup</a>
-        </Menu.Item>
-      </Menu>
-    )
-  } else {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-      </Menu>
-    )
-  }
+                <Menu.Item key="app">
+                    <a href="/signup">Signup</a>
+                </Menu.Item>
+            </Menu>
+        )
+    } else {
+        return (
+            <Menu mode={props.mode}>
+                <Menu.Item key="logout">
+                    <div onClick={logoutHandler}>
+                      Logout
+                    </div>
+                </Menu.Item>
+            </Menu>
+        )
+    }
 }
 
 export default withRouter(RightMenu);
