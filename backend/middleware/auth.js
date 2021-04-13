@@ -1,7 +1,10 @@
 const { User } = require('../models/User');
 
 let auth = (req, res, next) => {
-    let token = req.cookies.token;
+    // let token = req.cookies.token;
+    let token = req.headers.token;
+
+    console.log(`SERVER TOKEN : ${token}`);
 
     User.getUser(token, (err, user) => {
         if (err) {
@@ -18,6 +21,7 @@ let auth = (req, res, next) => {
                 case 'INVALID_TOKEN':
                 case 'NO_USER':
                 case 'Unauthorized':
+                case 'jwt malformed':
                     return res.json({ 
                         message: "유효하지 않은 토큰",
                         isAuth: false
