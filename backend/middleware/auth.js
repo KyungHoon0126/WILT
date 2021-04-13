@@ -4,12 +4,8 @@ let auth = (req, res, next) => {
     // let token = req.cookies.token;
     let token = req.headers.token;
 
-    console.log(`SERVER TOKEN : ${token}`);
-
     User.getUser(token, (err, user) => {
         if (err) {
-            console.log(`Auth Middleware Error : ${err.message}`);
-
             switch (err.message) {
                 case 'jwt must be provided':
                     return res.json({
