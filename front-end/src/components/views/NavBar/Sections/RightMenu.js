@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 // import { useSelector } from "react-redux";
 import { AUTH_API_URL } from '../../../Config';
 import Cookie from 'js-cookie';
-import Swal from 'sweetalert2';
+import { successToast, errorToast } from '../../../../lib/Toast';
 
 function RightMenu(props) {
     // const user = useSelector(state => state.user);
@@ -15,17 +15,9 @@ function RightMenu(props) {
             if (response.status === 200) {
               Cookie.remove('token');
               props.history.push("/login");
-              Swal.fire({  
-                 title: '로그아웃 성공',  
-                 type: 'success',  
-                 text: '',  
-              });  
+              successToast("로그아웃 성공");
             } else {
-                Swal.fire({  
-                    title: '로그아웃 실패',  
-                    type: 'success',  
-                    text: '',  
-                  });  
+                errorToast("로그아웃 실패");
             }
         });
     };
