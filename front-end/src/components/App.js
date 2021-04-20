@@ -8,6 +8,7 @@ import Auth from '../hoc/auth';
 import NavBar from './views/NavBar/NavBar';
 import LoginPage from './views/LoginPage/LoginPage';
 import SignupPage from './views/SignupPage/SignupPage';
+import PostPage from './views/PostPage/PostPage';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                    <Route exact path="/" component={Auth(LandingPage, null)} />
                    <Route exact path="/login" component={Auth(LoginPage, false)} />
                    <Route exact path="/signup" component={Auth(SignupPage, false)} />
+                   <Route exact path="/post" component={Auth(PostPage, null)} />
                 </Switch> 
             </div>
         </Suspense>

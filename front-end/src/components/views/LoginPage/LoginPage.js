@@ -6,6 +6,9 @@ import Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import './Sections/LoginPage.scss'
 import { Button, Input } from '@class101/ui';
+import { errorToast } from '../../../lib/Toast';
+import { Helmet } from 'react-helmet'
+// import { useTitle } from '../../../Hooks/useTitle';
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -41,17 +44,20 @@ function LoginPage(props) {
                       });  
                 } else {
                     setPassword('');
-                    Swal.fire({  
-                        title: '로그인 실패',  
-                        type: 'error',  
-                        text: '',  
-                      });
+                    errorToast("로그인 실패");
                 }
             });
     }
 
+    // const titleUpdater = useTitle("Loading...");
+    // setTimeout(() => titleUpdater("Login"), 1000);
+
     return (
         <div className="LoginPage-Wrapper">
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
+            
             <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
                 <Input placeholder="Email"
                        type="email"

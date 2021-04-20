@@ -4,6 +4,8 @@ import { signupUser } from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 import './Sections/SignupPage.scss'
 import { Button, Input } from '@class101/ui';
+import { successToast, errorToast, infoToast } from '../../../lib/Toast';
+import { Helmet } from 'react-helmet'
 
 function SignupPage(props) {
     const dispatch = useDispatch();
@@ -33,11 +35,11 @@ function SignupPage(props) {
         event.preventDefault();
 
         if (Password.length < 8 || ConfirmPassword.length < 8) {
-            return alert('패스워드 자릿수가 올바르지 않습니다.');
+            return infoToast("패스워드 자릿수가 올바르지 않습니다.");
         }
 
         if (Password !== ConfirmPassword) {
-            return alert('패스워드가 일치하지 않습니다.');
+            return infoToast("패스워드가 일치하지 않습니다.");
         }
 
         let body = {
@@ -50,16 +52,21 @@ function SignupPage(props) {
             .then(response => {
                 if (response.payload.status === 200) {
                     props.history.push('./login');
+                    successToast("회원가입 성공.");
                 } else if (response.payload.status === 400) {
-                    alert('중복된 이메일 입니다.');
+                    infoToast("중복된 이메일 입니다.");
                 } else {
-                    alert('회원가입에 실패하였습니다.');
+                    errorToast("회원가입에 실패하였습니다.");
                 }
-            })
+            });
     };
 
     return (
         <div className="SignupPage-Wrapper">
+            <Helmet>
+                <title>Signup</title>
+            </Helmet>
+
             <form id="SignupPage-Wrapper-Form" onSubmit={onSubmitHandler}>
                 <Input type="email" 
                        placeholder="Email"
@@ -84,7 +91,7 @@ function SignupPage(props) {
 
                 <br />
 
-                <Button onSubmit={onSubmitHandler}>
+                <Button onClick={onSubmitHandler}>
                     Signup
                 </Button>
             </form>
