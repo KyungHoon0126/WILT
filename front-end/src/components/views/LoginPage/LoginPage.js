@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import './Sections/LoginPage.scss'
+import { Button, Input } from '@class101/ui';
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -52,21 +53,21 @@ function LoginPage(props) {
     return (
         <div className="LoginPage-Wrapper">
             <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
-                <label>이메일</label>
-                <input type="email"
+                <Input placeholder="Email"
+                       type="email"
                        value={Email}
                        onChange={onEmailHandler}/>
 
-                <label>패스워드</label>
-                <input type="password"
+                <Input type="password"
+                       placeholder="Password"
                        value={Password}
                        onChange={onPasswordHandler}/>
 
                 <br />
 
-                <button>
-                   로그인 
-                </button>
+                <Button onClick={onSubmitHandler}>
+                   Signin 
+                </Button>
             </form>
         </div>
     )

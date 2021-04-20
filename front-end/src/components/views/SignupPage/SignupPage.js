@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { signupUser } from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 import './Sections/SignupPage.scss'
+import { Button, Input } from '@class101/ui';
 
 function SignupPage(props) {
     const dispatch = useDispatch();
@@ -60,32 +61,32 @@ function SignupPage(props) {
     return (
         <div className="SignupPage-Wrapper">
             <form id="SignupPage-Wrapper-Form" onSubmit={onSubmitHandler}>
-                <label>이메일</label>
-                <input type="email" 
+                <Input type="email" 
+                       placeholder="Email"
                        value={Email}
                        onChange={onEmailHandler}/>
 
-                <label>이름</label>
-                <input type="text"
+                <Input type="text"
+                       placeholder="Name"
                        value={Name}
                        onChange={onNameHandler}/>
                 
-                <label>패스워드</label>
-                <input type="password"
+                <Input type="password"
+                       placeholder="Password"
                        value={Password}
                        onChange={onPasswordHanler}
                        title="패스워드는 8자리 이상이어야 합니다."/>
                 
-                <label>패스워드 확인</label>
-                <input type="password"
+                <Input type="password"
+                       placeholder="Password Check"
                        value={ConfirmPassword}
                        onChange={onConfirmPasswordHandler}/>
 
                 <br />
 
-                <button>
-                    회원 가입
-                </button>
+                <Button onSubmit={onSubmitHandler}>
+                    Signup
+                </Button>
             </form>
         </div>
     )
