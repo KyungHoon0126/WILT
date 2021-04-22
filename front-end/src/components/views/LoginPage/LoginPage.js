@@ -8,6 +8,7 @@ import './Sections/LoginPage.scss'
 import { Button, Input } from '@class101/ui';
 import { errorToast } from '../../../lib/Toast';
 import { Helmet } from 'react-helmet'
+import PageTemplate from '../../Common/PageTemplate/index';
 // import { useTitle } from '../../../Hooks/useTitle';
 
 function LoginPage(props) {
@@ -53,29 +54,31 @@ function LoginPage(props) {
     // setTimeout(() => titleUpdater("Login"), 1000);
 
     return (
-        <div className="LoginPage-Wrapper">
-            <Helmet>
-                <title>Login</title>
-            </Helmet>
-            
-            <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
-                <Input placeholder="Email"
-                       type="email"
-                       value={Email}
-                       onChange={onEmailHandler}/>
+        <PageTemplate>
+            <div className="LoginPage-Wrapper">
+                <Helmet>
+                    <title>Login</title>
+                </Helmet>
+                
+                <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
+                    <Input placeholder="Email"
+                        type="email"
+                        value={Email}
+                        onChange={onEmailHandler}/>
 
-                <Input type="password"
-                       placeholder="Password"
-                       value={Password}
-                       onChange={onPasswordHandler}/>
+                    <Input type="password"
+                        placeholder="Password"
+                        value={Password}
+                        onChange={onPasswordHandler}/>
 
-                <br />
+                    <br />
 
-                <Button onClick={onSubmitHandler}>
-                   Signin 
-                </Button>
-            </form>
-        </div>
+                    <Button onClick={onSubmitHandler}>
+                    Signin 
+                    </Button>
+                </form>
+            </div>
+        </PageTemplate>
     )
 }
 

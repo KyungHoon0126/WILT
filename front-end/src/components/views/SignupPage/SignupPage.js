@@ -6,6 +6,7 @@ import './Sections/SignupPage.scss'
 import { Button, Input } from '@class101/ui';
 import { successToast, errorToast, infoToast } from '../../../lib/Toast';
 import { Helmet } from 'react-helmet'
+import PageTemplate from '../../Common/PageTemplate/index';
 
 function SignupPage(props) {
     const dispatch = useDispatch();
@@ -62,40 +63,42 @@ function SignupPage(props) {
     };
 
     return (
-        <div className="SignupPage-Wrapper">
-            <Helmet>
-                <title>Signup</title>
-            </Helmet>
+        <PageTemplate>
+            <div className="SignupPage-Wrapper">
+                <Helmet>
+                    <title>Signup</title>
+                </Helmet>
 
-            <form id="SignupPage-Wrapper-Form" onSubmit={onSubmitHandler}>
-                <Input type="email" 
-                       placeholder="Email"
-                       value={Email}
-                       onChange={onEmailHandler}/>
+                <form id="SignupPage-Wrapper-Form" onSubmit={onSubmitHandler}>
+                    <Input type="email" 
+                        placeholder="Email"
+                        value={Email}
+                        onChange={onEmailHandler}/>
 
-                <Input type="text"
-                       placeholder="Name"
-                       value={Name}
-                       onChange={onNameHandler}/>
-                
-                <Input type="password"
-                       placeholder="Password"
-                       value={Password}
-                       onChange={onPasswordHanler}
-                       title="패스워드는 8자리 이상이어야 합니다."/>
-                
-                <Input type="password"
-                       placeholder="Password Check"
-                       value={ConfirmPassword}
-                       onChange={onConfirmPasswordHandler}/>
+                    <Input type="text"
+                        placeholder="Name"
+                        value={Name}
+                        onChange={onNameHandler}/>
+                    
+                    <Input type="password"
+                        placeholder="Password"
+                        value={Password}
+                        onChange={onPasswordHanler}
+                        title="패스워드는 8자리 이상이어야 합니다."/>
+                    
+                    <Input type="password"
+                        placeholder="Password Check"
+                        value={ConfirmPassword}
+                        onChange={onConfirmPasswordHandler}/>
 
-                <br />
+                    <br />
 
-                <Button onClick={onSubmitHandler}>
-                    Signup
-                </Button>
-            </form>
-        </div>
+                    <Button onClick={onSubmitHandler}>
+                        Signup
+                    </Button>
+                </form>
+            </div>
+        </PageTemplate>
     )
 }
 
