@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Col, Button, Divider } from 'antd';
-import './Sections/GridCards.scss'
-import moment from 'moment'
+import './Sections/GridCards.scss';
+import moment from 'moment';
 
 function GridCards(props) {
     return (
@@ -22,7 +23,7 @@ function GridCards(props) {
         </Col> */
 
         <div style={{ margin: 10 }}>
-            <a href={`/post/${props.postIdx}`}>
+            <Link to={`/post/${props.postIdx}`}>
                 <div className="GridCards-Wrapper">
                     <div>
                         <img id="GridCards-Wrapper-Image"
@@ -33,7 +34,7 @@ function GridCards(props) {
                     <div className="GridCards-Wrapper-Content">
                         <h4>{`제목 : ${props.postTitle}`}</h4>
 
-                        <p>{props.postContent}</p>
+                        <div className="GridCards-Wrapper-Content-Content">{props.postContent}</div>
                         
                         <span>
                             {moment(props.postCreatedAt).format("YYYY년 M월 DD일")}
@@ -48,11 +49,16 @@ function GridCards(props) {
 
                     <div className="GridCards-Wrapper-Footer">
                         <h3>
-                            <b>글쓴이</b> + 좋아요 수
+                            <text>by</text> <b>{props.postWriter}</b>
+                            <svg width="12" height="11" viewBox="0 0 24 24">
+                                <path fill="currentColor" 
+                                      d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z" />
+                            </svg>
+                            {' ' + props.postLike}
                         </h3>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     )
 }

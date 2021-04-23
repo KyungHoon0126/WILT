@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ECategory = require('../Enums/ECategory');
 const autoIncrement = require('mongoose-auto-increment');
 const { User } = require('../models/User');
+const { defaultThumbnail } = require('../config');
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -30,7 +31,10 @@ const postSchema = new mongoose.Schema({
     writer: {
         type: String
     },
-    thumbnail: String,
+    thumbnail: {
+        type: String,
+        default: defaultThumbnail
+    },
     viewcnt: Number,
     like: {
         type: Number,

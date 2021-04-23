@@ -21,13 +21,20 @@
         color: #212529;
         margin: 0px 0px 4px;
     }
-    
-    p {
+
+    &-Content {
+        max-width: 100%;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        word-break: break-all;
         font-size: 14;
         color: #495057;
         margin: 0px 0px 24px;
     }
-    
+
     span {
         font-size: 12;
         color: #868E96;
@@ -37,10 +44,20 @@
 .GridCards-Wrapper-Footer {
     width: 216px;
     height: 45px;
-    padding: 10px 16px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
 
     h3 {
         margin: 0;
         font-size: 12px;
+
+        text {
+            color: #514B5B;
+        }
+
+        path {
+            margin-left: 50;
+        }
     }
 }

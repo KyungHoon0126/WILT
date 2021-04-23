@@ -1,0 +1,117 @@
+.rc-md-editor .editor-container .sec-html {
+    display: none;
+}
+
+.rc-md-navigation {
+    // !important : 1순위 css 적용
+    background: #ffffff !important;
+
+    &.visible {
+        border: none;
+        padding: 0px 48px;
+        margin: 0px 0px 16px;
+    }
+}
+
+.rc-md-editor {
+    border: none !important;
+    height: 745px; 
+}
+
+.rc-md-editor .editor-container .sec-md .input {
+    font-size: 18px !important;
+    width: 717.5px !important;
+    margin: 0px -30px -30px 0px !important;
+    padding: 0px 0px 30px;
+    overflow: auto !important;
+}
+
+.rc-md-editor .editor-container > .section > .section-container {
+    padding: 0px 3rem !important;
+}
+
+.PostPage-Title-Textarea {
+    border: none;
+    outline: none;
+    &:focus {
+        outline: none;
+    }
+
+    resize: none;
+    width: 100%;
+    padding-top: 2rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
+    font-size: 2.75rem;
+    font-weight: bold;
+    
+    &::placeholder {
+        color: #ADB5BD;
+    }
+}
+
+.PostPage-Wrapper {
+    display: flex;
+    border-radius: 5;
+    box-shadow: 1px 1px 2px 2px #f8f9fa;
+    
+    & > * {
+        width: 50%;
+    }
+
+    &-Body {
+        width: 50%;
+    }
+}
+
+.sc-ksdxAp {
+    padding: 8px 16px !important;
+}
+
+.Button-Wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0px 16px;
+    width: 718px;
+    height: 64px;
+    justify-content: space-between;
+    // border-radius: 5;
+    // box-shadow: 1px 1px 2px 2px #f8f9fa;
+}
+
+.Exit-Button {    
+    width: 114px !important;
+    height: 40px !important;
+    background: transparent !important;
+    
+    .sc-hBURRC {
+        font-size: 18px;
+
+        svg {
+            margin: 0px 8px 0px 0px;
+        }
+    }
+}
+
+.Exit-Button:hover {
+    background: #f2f2f2 !important;
+}
+
+.Create-Button {
+    margin: 0px 0px 0px 12px !important;
+    padding: 0px 20px !important;
+    background: #22C997 !important;
+    width: 112px !important;
+    height: 40px !important;
+
+    .sc-hBURRC {
+        color: white !important;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
+.Create-Button:hover {
+    background: white;
+    opacity: 0.5;
+}

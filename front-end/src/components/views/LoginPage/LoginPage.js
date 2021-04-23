@@ -5,6 +5,11 @@ import { withRouter } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import Swal from 'sweetalert2';
 import './Sections/LoginPage.scss'
+import { Button, Input } from '@class101/ui';
+import { errorToast } from '../../../lib/Toast';
+import { Helmet } from 'react-helmet'
+import PageTemplate from '../../Common/PageTemplate/index';
+// import { useTitle } from '../../../Hooks/useTitle';
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -40,35 +45,40 @@ function LoginPage(props) {
                       });  
                 } else {
                     setPassword('');
-                    Swal.fire({  
-                        title: '로그인 실패',  
-                        type: 'error',  
-                        text: '',  
-                      });
+                    errorToast("로그인 실패");
                 }
             });
     }
 
+    // const titleUpdater = useTitle("Loading...");
+    // setTimeout(() => titleUpdater("Login"), 1000);
+
     return (
-        <div className="LoginPage-Wrapper">
-            <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
-                <label>이메일</label>
-                <input type="email"
-                       value={Email}
-                       onChange={onEmailHandler}/>
+        <PageTemplate>
+            <div className="LoginPage-Wrapper">
+                <Helmet>
+                    <title>Login</title>
+                </Helmet>
+                
+                <form id="LoginPage-Wrapper-Form" onSubmit={onSubmitHandler}> 
+                    <Input placeholder="Email"
+                        type="email"
+                        value={Email}
+                        onChange={onEmailHandler}/>
 
-                <label>패스워드</label>
-                <input type="password"
-                       value={Password}
-                       onChange={onPasswordHandler}/>
+                    <Input type="password"
+                        placeholder="Password"
+                        value={Password}
+                        onChange={onPasswordHandler}/>
 
-                <br />
+                    <br />
 
-                <button>
-                   로그인 
-                </button>
-            </form>
-        </div>
+                    <Button onClick={onSubmitHandler}>
+                    Signin 
+                    </Button>
+                </form>
+            </div>
+        </PageTemplate>
     )
 }
 

@@ -1,0 +1,31 @@
+.MarkdownRender-Wrapper {
+    max-height: 900px;
+    overflow-y: auto;
+    padding: 3rem;
+    background: #FBFDFC;
+
+    &-Title {
+        border: none;
+        outline: none;
+        word-break: break-all;
+        &:focus {
+            outline: none;
+        }
+
+        width: 100%;
+        padding: 0.5rem 1rem;
+        font-size: 2.75rem;
+        font-weight: bold;
+        
+        &::placeholder {
+            color: #ADB5BD;
+        }
+    }
+}
+
+.MarkdownRender {
+    overflow-wrap: break-word;
+    padding: 15px;
+    padding-top: 10px;
+    font-size: 18px;
+}
