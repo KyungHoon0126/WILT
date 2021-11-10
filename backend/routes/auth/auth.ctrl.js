@@ -9,6 +9,7 @@ exports.signUp = (req, res) => {
             console.log("SIGN UP 400".red);
 
             return res.json({
+                status: 400,
                 message: "회원가입에 실패하였습니다.",
                 err
             });

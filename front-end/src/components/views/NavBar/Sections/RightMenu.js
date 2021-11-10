@@ -1,11 +1,12 @@
 import React from 'react';
+import Cookie from 'js-cookie';
 import { Menu } from 'antd';
 import { CustomAxios } from '../../../../lib/CustomAxios';
 import { withRouter } from 'react-router-dom';
-// import { useSelector } from "react-redux";
 import { AUTH_API_URL } from '../../../Config';
-import Cookie from 'js-cookie';
-import Swal from 'sweetalert2';
+import { successToast, errorToast } from '../../../../lib/Toast';
+import { Link } from 'react-router-dom';
+// import { useSelector } from "react-redux";
 
 function RightMenu(props) {
     // const user = useSelector(state => state.user);
@@ -15,17 +16,9 @@ function RightMenu(props) {
             if (response.status === 200) {
               Cookie.remove('token');
               props.history.push("/login");
-              Swal.fire({  
-                 title: '로그아웃 성공',  
-                 type: 'success',  
-                 text: '',  
-              });  
+              successToast("로그아웃 성공");
             } else {
-                Swal.fire({  
-                    title: '로그아웃 실패',  
-                    type: 'success',  
-                    text: '',  
-                  });  
+                errorToast("로그아웃 실패");
             }
         });
     };
@@ -35,20 +28,23 @@ function RightMenu(props) {
         return (
             <Menu mode={props.mode}>
                 <Menu.Item key="mail">
-                    <a href="/login">Signin</a>
+                    <Link to="/login">로그인</Link>
                 </Menu.Item>
 
                 <Menu.Item key="app">
-                    <a href="/signup">Signup</a>
+                    <Link to="/signup">회원가입</Link>
                 </Menu.Item>
             </Menu>
         )
     } else {
         return (
             <Menu mode={props.mode}>
+                <Menu.Item key="post">
+                    <Link to="/post">새 글 작성</Link>
+                </Menu.Item>
                 <Menu.Item key="logout">
                     <div onClick={logoutHandler}>
-                      Logout
+                      로그아웃
                     </div>
                 </Menu.Item>
             </Menu>

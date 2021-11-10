@@ -4,8 +4,13 @@ import GridCards from '../Commons/GridCards';
 import { Row } from 'antd';
 import useLoading from '../../../Hooks/useLoading';
 import Spinner from '../../Common/Spinner';
+import { Fab } from '@material-ui/core';
+import { IoPencil } from 'react-icons/io5'  
+import { Helmet } from 'react-helmet'
+import './Sections/LandingPage.scss';
+import { withRouter } from 'react-router';
 
-function LandingPage() { 
+function LandingPage(props) { 
     const [page, setPage] = useState(1);
     const [posts, setPosts] = useState([]);
 
@@ -49,8 +54,16 @@ function LandingPage() {
         }
     }, [fetchPosts, handleScroll])
 
+
+    const createPostHandler = () => {
+        props.history.push("/post");
+    }
+
     return (
         <div style={{ width: '100%', margin: '0' }}>
+            <Helmet>
+                <title>What I learned Today?</title>
+            </Helmet>
             {
                 isLoading && <Spinner />
             }
@@ -63,13 +76,20 @@ function LandingPage() {
                                        postTitle={post.title}
                                        postContent={post.content}
                                        postCreatedAt={post.createdAt}
+                                       postWriter={post.writer}
+                                       postLike={post.like}
                             />
                         </React.Fragment>
                     )}
                 </Row>
             </div>
+
+            <Fab id="Write-Post-Fab" color="secondary" aria-label="edit">
+                <IoPencil id="Write-Post-Fab-IoPencil"
+                          onClick={createPostHandler}/>
+            </Fab>
         </div>
     )
 }
 
-export default LandingPage
+export default  withRouter(LandingPage)
